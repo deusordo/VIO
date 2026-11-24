@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+  <title>Offline reference sample | VIO</title>
+  <meta name="description" content="A one-page VIO sample that you can save, read, and print without an internet connection.">
+  <link rel="canonical" href="https://deusordo.github.io/VIO/offline-reference.html">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --background: light-dark(#f3f6f7, #121419);
+      --text: light-dark(#181817, #f4f3f0);
+      --muted: light-dark(#444440, #c1c3c4);
+      --rule: light-dark(#9b988d, #777a7b);
+      background: var(--background);
+      color: var(--text);
+      font: 1rem/1.55 system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; }
+    main { width: min(100% - 2rem, 45rem); margin: clamp(1.5rem, 6vw, 5rem) auto; }
+    h1, h2 { line-height: 1.12; }
+    h1 { margin: .2rem 0 1rem; font-size: clamp(2rem, 6vw, 3.3rem); letter-spacing: -.04em; }
+    h2 { margin: 0; font-size: 1.25rem; }
+    header p:first-child { font-weight: 650; }
+    p, li, dd { color: var(--muted); }
+    section { border-block-start: 1px solid var(--rule); padding-block: 1.2rem; }
+    ol { padding-inline-start: 1.5rem; }
+    li + li { margin-block-start: .5rem; }
+    dl { display: grid; grid-template-columns: minmax(6rem, .45fr) minmax(0, 1fr); gap: .45rem .9rem; }
+    dt { font-weight: 650; }
+    dd { margin: 0; }
+    a { display: inline-flex; min-height: 2.75rem; align-items: center; color: inherit; text-underline-offset: .2em; }
+    a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+    @media print {
+      :root { color-scheme: light; }
+      main { width: 100%; margin: 0; }
+      nav { display: none; }
+      section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p>VIO · Fictional example</p>
+      <h1>Offline reference sample</h1>
+      <p>One reference card and its source details are stored together in this HTML file. You can keep it with a local library or print a copy for later use.</p>
+      <nav aria-label="Sample contents"><a href="#example">Jump to the reference card</a></nav>
+    </header>
+    <section aria-labelledby="trial-heading">
+      <h2 id="trial-heading">Try it offline</h2>
+      <ol>
+        <li>Use your browser’s Save Page command to save this page as an HTML file.</li>
+        <li>Disconnect from the internet and open the saved file in your browser.</li>
+        <li>Find the reference card below. Check that the checklist, source details, and contents link still work.</li>
+      </ol>
+    </section>
+    <section id="example" aria-labelledby="card-heading">
+      <h2 id="card-heading">Reference card · Preparing a reading shelf</h2>
+      <dl>
+        <dt>Record</dt><dd>Sample 01</dd>
+        <dt>Edition</dt><dd>1.0</dd>
+        <dt>Source</dt><dd>Illustrative reading-room checklist prepared for this sample</dd>
+      </dl>
+      <ol>
+        <li>Choose the guide you need and save a copy you have permission to keep.</li>
+        <li>Record its title, edition, and the location of the saved file.</li>
+        <li>Open the saved copy while disconnected and check that the pages you need are readable.</li>
+      </ol>
+    </section>
+    <section aria-labelledby="larger-heading">
+      <h2 id="larger-heading">For a larger collection</h2>
+      <p>Keep a backup in a separate location. Record the edition and date for each item, then restore a copy and check that the material opens on the devices people will use.</p>
+    </section>
+  </main>
+</body>
+</html>

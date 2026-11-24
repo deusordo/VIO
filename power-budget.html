@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portable power worksheet | VIO</title>
+  <meta name="description" content="Measure small loads and estimate runtime and daily solar generation with a free worksheet that runs offline.">
+  <link rel="canonical" href="https://deusordo.github.io/VIO/power-budget.html">
+  <style>
+    :root {
+      color-scheme: light dark;
+      font: 1rem/1.55 system-ui, sans-serif;
+      --ink: #1a242c;
+      --paper: #f7f8fa;
+      --edge: #8f9ca4;
+      --surface: #e8edf0;
+      --link: #234968;
+      --accent: #284a64;
+      --button-text: #fff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ink: #edf1f4;
+        --paper: #161b20;
+        --edge: #8393a0;
+        --surface: #27343e;
+        --link: #c1def4;
+        --accent: #c1def4;
+        --button-text: #142533;
+      }
+    }
+    * { box-sizing: border-box; }
+    body { color: var(--ink); background: var(--paper); margin: 0 auto; padding: 1.25rem; max-width: 58rem; }
+    h1, h2 { line-height: 1.1; text-wrap: balance; }
+    h1 { font: 650 clamp(2rem, 6vw, 3.6rem)/1.02 Georgia, serif; letter-spacing: -.035em; }
+    h2 { margin: 0 0 .75rem; font-size: 1.35rem; }
+    header p { max-width: 64ch; }
+    a { color: var(--link); text-underline-offset: .16em; }
+    section { margin-top: 1.4rem; border-top: 1px solid var(--edge); padding-top: 1.2rem; }
+    fieldset { border: 1px solid var(--edge); border-radius: .45rem; padding: .7rem; min-width: 0; }
+    legend { font-weight: 650; padding: 0 .25rem; }
+    .loads, .fields, .metrics { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .65rem; }
+    .fields { margin: .85rem 0; }
+    label { display: block; font-size: .92rem; }
+    fieldset label + label { margin-top: .45rem; }
+    input { display: block; font: inherit; min-height: 2.75rem; width: 100%; margin-top: .15rem; border: 1px solid var(--edge); border-radius: .3rem; padding: .3rem .45rem; color: var(--ink); background: var(--paper); }
+    .actions, .links { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .9rem; }
+    button { font: 650 1rem system-ui,sans-serif; background: var(--accent); color: var(--button-text); border: 1px solid var(--accent); padding: .45rem .8rem; border-radius: .35rem; min-height: 2.75rem; cursor: pointer; }
+    button[type="reset"] { background: transparent; color: var(--ink); border-color: var(--edge); }
+    :focus-visible { outline: 3px solid var(--link); outline-offset: 3px; }
+    .metrics { padding: .9rem; background: var(--surface); border: 1px solid var(--edge); border-radius: .45rem; }
+    .metrics output { font-size: 1.35rem; font-weight: 700; display: block; }
+    #balance { margin-bottom: 0; }
+    .sheet { width: 100%; border-collapse: collapse; }
+    .sheet th, .sheet td { padding: .48rem .3rem; text-align: start; border-bottom: 1px solid var(--edge); }
+    .sheet td { min-width: 2.5rem; }
+    .screen-only { margin-block: .65rem; }
+    @media (max-width: 35rem) {
+      .loads, .fields, .metrics { grid-template-columns: minmax(0,1fr); }
+    }
+    @media print {
+      @page { size: Letter; margin: .52in; }
+      :root { color-scheme: light; font-size: 10pt; --paper: #fff; --ink: #172028; --surface: #edf2f5; --link: #234968; }
+      body { margin: 0; padding: 0; line-height: 1.35; }
+      h1 { font-size: 25pt; margin: .3em 0; }
+      h2 { font-size: 15pt; }
+      .screen-only, form, noscript { display: none; }
+      section { margin-top: .65rem; padding-top: .55rem; }
+      p, ol { margin-block: .55em; }
+      .metrics { padding: .55rem; }
+      .metrics, tr, li { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="screen-only links" aria-label="VIO"><a href="https://deusordo.github.io/VIO/guide.html#step-4">VIO power guide</a><a href="https://deusordo.github.io/VIO/power-budget.pdf" download>Print worksheet (PDF)</a></nav>
+    <h1>Portable power worksheet</h1>
+    <p>Measure three small loads with a compatible USB or plug-in power meter. Use their daily energy to compare battery runtime and expected solar recharge. This page runs offline and keeps inputs in the current tab.</p>
+  </header>
+  <main>
+    <section aria-labelledby="estimate">
+      <h2 id="estimate">Estimate with your measurements</h2>
+      <form id="budget" hidden>
+        <div class="loads">
+          <fieldset><legend>Light</legend><label>Watts <input name="light-w" type="number" min="0" max="10000" step="any" value="4" required></label><label>Hours per day <input name="light-h" type="number" min="0" max="24" step="any" value="5" required></label></fieldset>
+          <fieldset><legend>Radio</legend><label>Watts <input name="radio-w" type="number" min="0" max="10000" step="any" value="3" required></label><label>Hours per day <input name="radio-h" type="number" min="0" max="24" step="any" value="4" required></label></fieldset>
+          <fieldset><legend>Phone or other load</legend><label>Watts <input name="device-w" type="number" min="0" max="10000" step="any" value="12" required></label><label>Hours per day <input name="device-h" type="number" min="0" max="24" step="any" value="1" required></label></fieldset>
+        </div>
+        <div class="fields">
+          <label>Usable battery energy (Wh) <input name="battery" type="number" min="0" max="100000" step="any" value="96" required></label>
+          <label>Rated solar panel output (W) <input name="panel" type="number" min="0" max="10000" step="any" value="30" required></label>
+          <label>Equivalent full-sun hours per day <input name="sun" type="number" min="0" max="24" step="any" value="2" required></label>
+          <label>Combined charging yield (%) <input name="yield" type="number" min="0" max="100" step="any" value="75" required></label>
+        </div>
+        <p>Use battery energy measured at the output after accounting for any reserve you want to keep. A zero solar input models no charging.</p>
+        <div class="actions"><button type="submit">Calculate</button><button type="reset">Reset example</button></div>
+      </form>
+      <noscript><p>The example and paper worksheet work with JavaScript disabled.</p></noscript>
+      <div class="metrics" aria-live="polite" aria-atomic="true">
+        <div>Daily demand <output id="demand">44 Wh</output></div>
+        <div>Battery alone <output id="runtime">2.18 days</output></div>
+        <div>Daily solar yield <output id="solar">45 Wh</output></div>
+      </div>
+      <p id="balance">The example gains 1 Wh/day at the stated solar yield. A cloudy day can erase that margin.</p>
+      <p>Label estimates when sharing results. Compare measured daily energy on a clear and a poor-weather day, using the same cables and charging equipment. Check that the power unit can handle simultaneous loads and brief startup demands.</p>
+    </section>
+    <section aria-labelledby="paper">
+      <h2 id="paper">Paper worksheet</h2>
+      <table class="sheet"><thead><tr><th scope="col">Load</th><th scope="col">Watts</th><th scope="col">Hours/day</th><th scope="col">Wh/day</th></tr></thead>
+        <tbody><tr><th scope="row">Light</th><td></td><td></td><td></td></tr><tr><th scope="row">Radio</th><td></td><td></td><td></td></tr><tr><th scope="row">Phone or other</th><td></td><td></td><td></td></tr><tr><th scope="row">Total daily demand</th><td></td><td></td><td></td></tr></tbody>
+      </table>
+      <ol>
+        <li>Daily demand = sum of watts × hours. A directly measured charge in Wh can be added to the daily total.</li>
+        <li>Days on battery alone = usable output Wh ÷ daily demand in Wh. With the sample measurements, 96 ÷ 44 = 2.18 days.</li>
+        <li>Solar Wh/day = rated watts × equivalent full-sun hours × charging yield. The example is 30 × 2 × 0.75 = 45 Wh/day.</li>
+        <li>Log the measured yield on a poor-weather day. If it is below demand, reduce the load or test another fallback before relying on it.</li>
+      </ol>
+      <p>Measurement date and conditions ____________________<br>Equipment and usable battery energy ____________________<br>Measured daily solar yield ____________________<br>Next test or fallback ____________________</p>
+    </section>
+    <section aria-labelledby="references">
+      <h2 id="references">Before relying on a system</h2>
+      <p>Use compatible, manufacturer-approved portable equipment. Permanent solar, building circuits, and backup for critical equipment need an installation and continuity plan appropriate to the site. Get qualified help before changing building wiring.</p>
+      <div class="links"><a href="https://www.energy.gov/cmei/systems/solar-and-resilience-basics">DOE solar resilience</a><a href="https://pvwatts.nlr.gov/docs/help_start.php">PVWatts solar modeling</a><a href="https://www.ready.gov/power-outages">Ready.gov power outage planning</a></div>
+    </section>
+  </main>
+  <script>
+    const form = document.querySelector('#budget');
+    const number = name => form.elements.namedItem(name).valueAsNumber;
+    const format = value => new Intl.NumberFormat(undefined,{ maximumFractionDigits: 2 }).format(value);
+    const output = (id,value) => { document.getElementById(id).textContent = value; };
+    function updateBudget() {
+      const demand = ['light','radio','device'].reduce((sum,name) => sum + number(name+'-w') * number(name+'-h'),0);
+      const solar = number('panel') * number('sun') * number('yield') / 100;
+      const net = solar - demand;
+      output('demand', format(demand)+' Wh');
+      output('runtime', demand > 0 ? format(number('battery') / demand)+' days' : 'Enter a load');
+      output('solar', format(solar)+' Wh');
+      const result = Math.abs(net) < .00001 ? 'Estimated solar matches demand.' :
+        'Estimated '+(net > 0 ? 'surplus' : 'shortfall')+' of '+format(Math.abs(net))+' Wh/day.';
+      output('balance', result+' Confirm output in poor weather.');
+    }
+    form.addEventListener('submit', event => { event.preventDefault(); updateBudget(); });
+    form.addEventListener('reset', () => requestAnimationFrame(updateBudget));
+    form.hidden = false;
+  </script>
+</body>
+</html>

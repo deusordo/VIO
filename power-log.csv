@@ -1,0 +1,6 @@
+Date,Conditions,Load,Measured watts,Hours per day,Measured or calculated Wh per day,Note
+Example,Indoor,Light,4,5,20,Sample arithmetic
+Example,Indoor,Radio,3,4,12,Sample arithmetic
+Example,Indoor,Phone recharge,12,1,12,Sample arithmetic
+Example,Clear equivalent 2 full sun hours,Solar yield,30,2,45,75 percent combined charging yield
+Example,Cloudy equivalent 0.5 full sun hours,Solar yield,30,0.5,11.25,32.75 Wh below 44 Wh sample demand

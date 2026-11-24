@@ -109,6 +109,15 @@ html { scroll-padding-block-start: 1rem; }
 .question-list { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-block: 1.1rem .75rem; }
 .question-list dt { font-weight: 650; }
 .reference-list dd, .question-list dd { margin: .25rem 0 0; color: var(--muted); }
+.lab-guide { width: min(100% - clamp(2rem, 8vw, 8rem), 48rem); padding-block-start: clamp(1.6rem, 5vw, 3rem); }
+.lab-guide h1 { font-size: clamp(2.15rem, 6.8vw, 4.2rem); margin-block: .45rem .7rem; }
+.lab-guide .work-section { padding-block: 1.4rem; }
+.lab-guide p, .lab-guide li { color: var(--muted); }
+.lab-guide h3 { margin-block: 1.25rem .4rem; }
+.lab-guide li + li { margin-block-start: .4rem; }
+.lab-guide pre { overflow-x: auto; margin-block: .75rem; padding: .85rem 1rem; background: var(--theme-hover); border: 1px solid var(--rule); border-radius: .4rem; font-size: .875rem; }
+.lab-guide pre:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.lab-guide .lab-status { font-size: .875rem; font-weight: 650; color: var(--accent); }
 @media (max-width: 620px) {
   .header-inner { gap: .25rem .65rem; }
   .header-links { gap: .2rem .65rem; }

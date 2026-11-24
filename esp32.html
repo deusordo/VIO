@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" class="vio">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ESP32 Workbench | VIO</title>
+  <meta name="description" content="Start with a USB serial lesson for the ESP32-S3 and see how VIO documents hardware builds so others can reproduce them.">
+  <link rel="canonical" href="https://deusordo.github.io/VIO/esp32.html">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ESP32 Workbench | VIO">
+  <meta property="og:description" content="A USB serial starter lesson and VIO’s format for documenting ESP32 builds.">
+  <meta property="og:url" content="https://deusordo.github.io/VIO/esp32.html">
+  <meta name="theme-color" content="#f3f6f7">
+  <script src="./theme.js"></script>
+  <link rel="stylesheet" href="./styles.css?v=esp32-workbench">
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="identity" href="./"><span class="mark" aria-hidden="true"></span><span class="identity-name">VIO</span></a>
+      <nav class="header-links" aria-label="Main navigation">
+        <a href="./#project">Projects</a>
+        <button class="theme-toggle" data-theme-toggle type="button" hidden>
+          <svg class="theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41m0-14.14-1.41 1.41M6.34 17.66l-1.41 1.41"/></svg>
+          <svg class="theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.4A8.7 8.7 0 0 1 9.6 3.5 8.8 8.8 0 1 0 20.5 14.4Z"/></svg>
+          <span data-theme-label>Theme</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap lab-guide" id="content" tabindex="-1">
+    <h1>ESP32 workbench</h1>
+    <p>See what a build does, then follow the steps to reproduce it and check your result.</p>
+
+    <section class="work-section" id="serial-check" aria-labelledby="serial-heading">
+      <h2 class="section-title" id="serial-heading">Check the USB serial connection</h2>
+      <p class="lab-status">Starter lesson · Hardware test pending</p>
+      <p>Get a repeating message from the board before adding sensors or displays. You’ll need an ESP32-S3-DevKitC-1, a compatible USB data cable, and a computer with Arduino IDE. This lesson uses the board’s USB-to-UART port and no jumper wires.</p>
+      <h3>Set up the board</h3>
+      <ol>
+        <li>Install the board support using <a href="https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html">Espressif’s Arduino setup guide</a>. Match the board and memory settings to your module.</li>
+        <li>Connect the cable to the <a href="https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html">USB-to-UART connector shown in the DevKitC-1 guide</a>. Check your board revision for the correct port. In Arduino’s Tools menu, choose the matching serial port and set USB CDC On Boot to Disabled for the UART connector.</li>
+        <li>Upload the sketch below, then open Serial Monitor at <strong>115200 baud</strong>.</li>
+      </ol>
+      <pre tabindex="0" aria-label="Arduino sketch"><code id="serial-sketch">void setup() {
+  Serial.begin(115200);
+}
+
+void loop() {
+  Serial.println("VIO: serial link OK");
+  delay(1000);
+}</code></pre>
+      <h3>Check your result</h3>
+      <p>The expected output is <code>VIO: serial link OK</code> about once a second. Press Reset and check that the output resumes. If the port is missing, try a known data cable. If the monitor is blank, recheck the port, CDC setting, and baud rate. <a href="https://docs.espressif.com/projects/arduino-esp32/en/latest/troubleshooting.html">Espressif’s troubleshooting guide</a> covers both USB connectors.</p>
+    </section>
+
+    <section class="work-section" id="project-format" aria-labelledby="format-heading">
+      <h2 class="section-title" id="format-heading">How VIO will document each build</h2>
+      <ol>
+        <li><strong>Show what it does.</strong> Lead with the purpose and a photo or short demo of the working build.</li>
+        <li><strong>Make it repeatable.</strong> List the exact board revision, parts, pin assignments, software versions, and the steps to build and flash it. Explain the code where it helps a reader change or repair the build.</li>
+        <li><strong>Show how to test it.</strong> Include the expected result, actual bench evidence when available, and common fixes. Label simulations and untested variants explicitly.</li>
+      </ol>
+    </section>
+
+    <section class="work-section" aria-labelledby="inspiration-heading">
+      <h2 class="section-title" id="inspiration-heading">References</h2>
+      <ul>
+        <li><a href="https://dimport.vercel.app/">Danish Iman’s ESP32 Lab</a> shows how to present finished builds with photos and short project descriptions.</li>
+        <li><a href="https://ionloft.com/esp-labs/#/?lang=en">Ionloft’s ESP Labs</a> shows how to teach one build at a time through board-specific wiring, parts lists, firmware walkthroughs, and simulators.</li>
+      </ul>
+      <a class="work-link" href="../Numind/#esp-labs">Find ESP Labs in NuMind</a>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p>VIO · Technology</p>
+      <a href="../NuTerra/#ecosystem">Explore the NuTerra pillars</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="230" viewBox="0 0 720 230" role="img" aria-labelledby="title description">
+  <title id="title">ESP32-S3 serial starter connection</title>
+  <desc id="description">A computer connects through a USB data cable to the dev board’s USB-to-UART bridge. The example uses the bridge and leaves the board's native USB port unused.</desc>
+  <rect width="720" height="230" rx="14" fill="#edf4f7"/>
+  <g fill="none" stroke="#2d526d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="30" y="49" width="154" height="92" rx="8" fill="#fff"/><path d="M18 142h179v10H18z"/>
+    <path d="M184 107c55 0 70-34 112-34h37"/><path d="M322 65l10 8-10 8"/>
+    <rect x="333" y="40" width="238" height="141" rx="12" fill="#d1e5ed"/>
+    <rect x="333" y="65" width="21" height="17" fill="#fff"/>
+    <rect x="333" y="129" width="21" height="17" fill="#edf4f7" stroke-dasharray="4 3"/>
+    <path d="M354 73h31v33h38"/><rect x="423" y="86" width="105" height="45" rx="6" fill="#fff"/>
+  </g>
+  <g fill="#18374a" font-family="system-ui, sans-serif" text-anchor="middle">
+    <text x="107" y="83" font-size="17" font-weight="700">Serial Monitor</text><text x="107" y="114" font-size="17">115200 baud</text>
+    <text x="253" y="152" font-size="17">USB data cable</text><text x="403" y="62" font-size="15">USB-to-UART</text><text x="475" y="114" font-size="16" font-weight="700">ESP32-S3</text>
+    <text x="419" y="169" font-size="15">Native USB unused</text>
+  </g>
+</svg>

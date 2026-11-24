@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" data-palette="blue" data-guide="bench">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build and verify an ESP32 project | VIO</title>
+  <meta name="description" content="Document a hardware build others can reproduce, debug, and maintain. Start with a USB serial baseline.">
+  <link rel="canonical" href="https://deusordo.github.io/VIO/guide.html">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <script src="./theme.js"></script>
+  <link rel="stylesheet" href="../NuTerra/guide.css?v=operating-guides">
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header><div class="wrap header">
+    <a class="brand" href="./"><img src="./mark.svg" width="32" height="32" alt="">VIO</a>
+    <nav aria-label="Main navigation"><a href="./">Overview</a><a aria-current="page" href="./guide.html">Guide</a><a href="../NuTerra/#ecosystem">NuTerra</a><button type="button" data-theme-toggle hidden><span data-theme-label>Theme</span></button></nav>
+  </div></header>
+  <main class="wrap" id="content" tabindex="-1">
+    <h1>Build and verify an ESP32 project</h1>
+    <p class="intro">Document a hardware build others can reproduce, debug, and maintain. Start with a USB serial baseline.</p>
+    <p class="meta">Starter lesson. Hardware verification is pending.</p>
+    <div class="actions"><a class="download" href="./guide.pdf" download>Download printable guide (PDF)</a><a href="./details.html">Project details and resources</a></div>
+    <figure><ol class="diagram" role="list"><li>ESP32-S3 board<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></li><li>USB-to-UART<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></li><li>Serial monitor<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></li><li>Saved test log</li></ol><figcaption>Verify the board and serial path before you add another component.</figcaption></figure>
+    <div class="layout">
+      <nav class="contents" aria-label="On this page"><strong>In order</strong><ol><li><a href="#step-1">Define the test before building</a></li><li><a href="#step-2">Collect parts, versions, and costs</a></li><li><a href="#step-3">Build and make one measurement</a></li><li><a href="#step-4">Diagnose before adding features</a></li><li><a href="#step-5">Maintain and upgrade the build</a></li><li><a href="#step-6">Record the bench test</a></li></ol></nav>
+      <article><section id="step-1"><h2>1. Define the test before building</h2><p>Target the ESP32-S3-DevKitC-1 and identify the revision on the actual board. The starter’s expected output is a repeated line about once a second, with output resuming after Reset.</p><p>Danish Iman’s project cards use a photo and a concise description of the result. ESP Labs adds board-specific prerequisites, steps, and code. Apply both ideas when publishing a VIO build. <a href="https://dimport.vercel.app/">ESP32 Lab portfolio</a> · <a href="https://ionloft.com/esp-labs/#/?lang=en">ESP Labs</a></p></section>
+<section id="step-2"><h2>2. Collect parts, versions, and costs</h2><p>Use one matching dev board, one USB data cable, Arduino IDE with the ESP32 board support package, and a serial monitor. Record the board revision, package version, OS, port, and settings in the test record. The starter uses the on-board USB-to-UART bridge and no jumpers.</p><p>With sample inputs, a $12 board and a $4 data cable total $16 before shipping and tax. Record actual receipts for the build. <a href="https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html">Espressif DevKitC-1 guide</a></p></section>
+<section id="step-3"><h2>3. Build and make one measurement</h2><figure><img src="./serial-path.svg" width="720" height="230" alt="A USB data cable connects the computer’s serial monitor to the board’s USB-to-UART port."><figcaption>Logical connection for the serial starter. Find the USB-to-UART label on your board before connecting the cable.</figcaption></figure><ol><li>Connect the USB-to-UART port shown in the matching board documentation. Select the board and port in Arduino IDE.</li><li>Disable USB CDC On Boot for this UART procedure, upload the sketch, and open Serial Monitor at 115200 baud.</li><li>Capture a short log and time several consecutive intervals. Disconnect and reconnect the cable, then repeat after pressing Reset.</li></ol><p>Example mean period = (time of sixth line − time of first line) ÷ 5. If the timestamps are 0.10 and 5.15 seconds, the mean is <strong>1.01 seconds</strong>. Record observed data with the board and reader versions.</p><p><a href="./esp32.html#serial-check">Open the sketch and detailed steps</a></p></section>
+<section id="step-4"><h2>4. Diagnose before adding features</h2><p>A user report on Espressif’s tracker describes intermittent output with USB CDC. Record which physical connector and USB mode were used before comparing results. If the baseline fails, change one variable at a time, such as the cable, port, board selection, or serial configuration. Capture what changed.</p><p><a href="https://github.com/espressif/arduino-esp32/issues/12494">Reported USB CDC behavior</a> · <a href="https://docs.espressif.com/projects/arduino-esp32/en/latest/troubleshooting.html">Espressif troubleshooting</a></p></section>
+<section id="step-5"><h2>5. Maintain and upgrade the build</h2><p>Keep the working sketch and toolchain version, test log, part identifiers, and a small annotated diagram. Change one component or software version at a time. Rerun the baseline and test the new behavior. Keep the previous build available for recovery and record which board variants were actually tested.</p><p><a href="./details.html#project">Browse VIO projects</a> · <a href="../Numind/details.html#esp-labs">Find ESP Labs in NuMind</a></p></section>
+<section id="step-6">
+  <h2>6. Record the bench test</h2>
+  <p>Use the same entries for the baseline and for each upgrade. Attach a short serial log to the record.</p>
+  <div class="table-scroll"><table>
+    <caption>Test record</caption>
+    <thead><tr><th scope="col">Check</th><th scope="col">What to record</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Setup</th><td>Test date, board revision, package version, connector, baud rate</td></tr>
+      <tr><th scope="row">Baseline</th><td>First and sixth timestamps, mean interval, visible output</td></tr>
+      <tr><th scope="row">Reset and reconnect</th><td>Whether output resumed after each action</td></tr>
+      <tr><th scope="row">Upgrade or fix</th><td>One change, observed difference, and the version available for rollback</td></tr>
+      <tr><th scope="row">Result</th><td>Pass, fail, or pending with the evidence location</td></tr>
+    </tbody>
+  </table></div>
+</section>
+</article>
+    </div>
+  </main>
+  <footer><div class="wrap footer"><p>VIO</p><a href="./">Back to the overview</a></div></footer>
+</body>
+</html>
